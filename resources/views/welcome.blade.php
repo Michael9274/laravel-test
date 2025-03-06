@@ -73,8 +73,13 @@
             text-decoration: none;
         }
 
+        p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
         .alert {
-            padding: 5px;
+            padding: 20px;
             display: block;
             border-radius: 10px;
             margin:  30px 0;
@@ -136,9 +141,8 @@
 
         @if (Session::has('success'))
             <div class="alert alert-success">
-                <ul>
-                    <li><strong>Transaction ID: </strong>{{ Session::get('transaction_id') ?? 'Without Transaction ID' }}</li>
-                </ul>
+                <p>Transaction created successfully.</p>
+                <strong>Transaction ID: </strong>{{ Session::get('transaction_id') ?? 'Without Transaction ID' }}
             </div>
         @endif
     </div>

@@ -7,44 +7,6 @@
 
     <title>Laravel</title>
 
-    <!-- Fonts -->
-
-    <!-- Styles -->
-    <style>
-
-    </style>
-</head>
-
-<body class="font-sans antialiased">
-    <div class="container">
-        <div class="row justify-content-center">
-            <form action="/deposit" method="post">
-                @csrf
-                <div class="form-group">
-                    <label for="name">Payment method</label>
-                    <select class="form-control" id="pay-method" name="pay-method">
-                        <option value="easymoney">EasyMoney</option>
-                        <option value="superwalletz">SuperWalletz</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="amount">Amount</label>
-                    <input type="text" class="form-control" id="amount" name="amount" placeholder="Insert amount"
-                        value="25">
-                </div>
-                <div class="form-group">
-                    <label for="currency">Currency</label>
-                    <select class="form-control" id="currency" name="currency">
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Deposit</button>
-                </div>
-            </form>
-        </div>
-    </div>
     <style>
         .container {
             width: 100%;
@@ -110,6 +72,76 @@
             color: #212529;
             text-decoration: none;
         }
-    </style>
 
+        .alert {
+            padding: 5px;
+            display: block;
+            border-radius: 10px;
+            margin:  30px 0;
+        }
+
+        .alert-danger {
+            background: #f4433680;
+            color: #a40e00;
+        }
+
+        .alert-success {
+            background: #2ea40080;
+            color: #1f7400;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased">
+<div class="container">
+    <div class="row justify-content-center">
+        <form action="/deposit" method="post">
+            @csrf
+            <div class="form-group">
+                <label for="pay-method">Payment method</label>
+                <select class="form-control" id="pay-method" name="pay-method">
+                    <option value="easymoney">EasyMoney</option>
+                    <option value="superwalletz">SuperWalletz</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="text" class="form-control" id="amount" name="amount" placeholder="Insert amount"
+                       value="25">
+            </div>
+
+            <div class="form-group">
+                <label for="currency">Currency</label>
+                <select class="form-control" id="currency" name="currency">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+            </div>
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Deposit</button>
+            </div>
+        </form>
+
+        @if (Session::has('success'))
+            <div class="alert alert-success">
+                <ul>
+                    <li><strong>Transaction ID: </strong>{{ Session::get('transaction_id') ?? 'Without Transaction ID' }}</li>
+                </ul>
+            </div>
+        @endif
+    </div>
+</div>
+</body>
 </html>
